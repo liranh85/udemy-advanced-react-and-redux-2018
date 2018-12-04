@@ -5,6 +5,7 @@ import Root from 'src/Root'
 import App from 'src/components/App'
 
 ReactDOM.render(
+  // The Root component was created to make the Redux setup reusable, so it can be used from test files as well, which import components directly, and thus need to be wrapped with the Provider tag to have access to the Redux store
   <Root>
     <App />
   </Root>,
