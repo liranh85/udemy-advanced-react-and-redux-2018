@@ -1,6 +1,7 @@
+// Set up compilerOptions for VSCode, including how to resolve import statements (needed in accordance with the setup done in ".env")
 {
   "compilerOptions": {
     "module": "es6",
-    "baseUrl": "src/"
+    "baseUrl": "./"
   }
 }

@@ -1,11 +1,16 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import CommentBox from 'components/CommentBox'
+import Root from 'src/Root'
+import CommentBox from 'src/components/CommentBox'
 
 let wrapped
 
 beforeEach(() => {
-  wrapped = mount(<CommentBox />)
+  wrapped = mount(
+    <Root>
+      <CommentBox />
+    </Root>
+  )
 })
 
 afterEach(() => {
@@ -18,16 +23,26 @@ it('has a text area and a button', () => {
   expect(wrapped.find('button').length).toEqual(1)
 })
 
-it('has a text area that users can type in', () => {
+describe('The text area', () => {
   const value = 'new comment'
-  wrapped.find('textarea').simulate('change', {
-    target: {
-      value
-    }
+
+  beforeEach(() => {
+    wrapped.find('textarea').simulate('change', {
+      target: {
+        value
+      }
+    })
+    // Since this.setState() (called in handleSubmit() ) is asyncronous, we need to force update our component
+    wrapped.update()
   })
 
-  // Since this.setState() is asyncronous, we need to force update our component
-  wrapped.update()
+  it('allows users to type in it', () => {
+    expect(wrapped.find('textarea').prop('value')).toEqual(value)
+  })
 
-  expect(wrapped.find('textarea').prop('value')).toEqual(value)
+  it('gets emptied after submitting the form', () => {
+    wrapped.find('form').simulate('submit')
+    wrapped.update()
+    expect(wrapped.find('textarea').prop('value')).toEqual('')
+  })
 })
