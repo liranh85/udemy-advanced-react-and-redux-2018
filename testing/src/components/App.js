@@ -3,11 +3,15 @@ import { Link, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import CommentBox from 'src/components/CommentBox'
 import CommentList from 'src/components/CommentList'
+import * as actions from 'src/actions'
 
 class App extends Component {
   renderButton() {
+    const { auth, changeAuth } = this.props
     return (
-      <button>Sign {this.props.auth ? 'out' : 'in'}</button>
+      <button onClick={() => changeAuth(!auth)}>
+        Sign {auth ? 'out' : 'in'}
+      </button>
     )
   }
 
@@ -21,7 +25,7 @@ class App extends Component {
           <Link to="/post">Post a comment</Link>
         </li>
         <li>
-          <Link to="/">{this.renderButton()}</Link>
+          {this.renderButton()}
         </li>
       </ul>
     )
@@ -42,4 +46,4 @@ function mapStateToProps(state) {
   return { auth: state.auth }
 }
 
-export default connect(mapStateToProps)(App)
+export default connect(mapStateToProps, actions)(App)
