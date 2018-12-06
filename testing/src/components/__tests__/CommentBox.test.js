@@ -7,7 +7,7 @@ let wrapped
 
 beforeEach(() => {
   wrapped = mount(
-    <Root>
+    <Root initialState={{ auth: true }}>
       <CommentBox />
     </Root>
   )
@@ -19,6 +19,7 @@ afterEach(() => {
 
 it('has a text area and two buttons', () => {
   // We're using the Full DOM rendering from Enzyme in here. We're doing this not because it's necessary in this case (it isn't, because there are no React component children), but just to demonstrate how to do so.
+
   expect(wrapped.find('textarea').length).toEqual(1)
   expect(wrapped.find('button').length).toEqual(2)
 })

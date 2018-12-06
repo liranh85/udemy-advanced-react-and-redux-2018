@@ -1,5 +1,7 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
+import { MemoryRouter } from 'react-router-dom'
+import Root from 'src/Root'
 import App from 'src/components/App'
 import CommentBox from 'src/components/CommentBox'
 import CommentList from 'src/components/CommentList'
@@ -7,11 +9,21 @@ import CommentList from 'src/components/CommentList'
 let wrapped
 
 beforeEach(() => {
-  wrapped = shallow(<App />)
+  wrapped = mount(
+    <Root>
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    </Root>
+  )
 })
 
-it('shows a comment box', () => {
-  expect(wrapped.find(CommentBox).length).toEqual(1)
+it('has two Links', () => {
+  expect(wrapped.find('Link').length).toEqual(2)
+})
+
+it('shows an auth button', () => {
+  expect(wrapped.find('.auth-button').length).toEqual(1)
 })
 
 it('shows a comment list', () => {

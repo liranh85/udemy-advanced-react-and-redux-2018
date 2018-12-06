@@ -9,7 +9,10 @@ class App extends Component {
   renderButton() {
     const { auth, changeAuth } = this.props
     return (
-      <button onClick={() => changeAuth(!auth)}>
+      <button
+        onClick={() => changeAuth(!auth)}
+        className="auth-button"
+      >
         Sign {auth ? 'out' : 'in'}
       </button>
     )
@@ -22,7 +25,7 @@ class App extends Component {
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/post">Post a comment</Link>
+          <Link className="post-link" to="/post">Post a comment</Link>
         </li>
         <li>
           {this.renderButton()}
