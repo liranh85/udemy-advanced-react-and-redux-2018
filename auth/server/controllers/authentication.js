@@ -1,9 +1,19 @@
+const jwt = require('jwt-simple')
 const User = require('../models/user')
+const config = require('../config')
+
+function tokenForUser(user) {
+  const timestamp = new Date().getTime()
+  // `sub` stands for Subject, meaning "who is this token about / who does it belong to"
+  // `iat` stands for Issued At Time
+  return jwt.encode({ sub: user.id, iat: timestamp }, config.secret)
+}
 
 exports.signup = function(req, res, next) {
   const { email, password } = req.body
 
   if (!email || !password) {
+    // 422: Unprocessable entity
     return res.status(422).send({ error: 'You must provide email and password' })
   }
 
@@ -15,7 +25,6 @@ exports.signup = function(req, res, next) {
 
     // If it does (so existing email), return an error
     if (existingUser) {
-      // 422: Unprocessable entity
       return res.status(422).send({ error: 'Email is in use' })
     }
 
@@ -26,7 +35,7 @@ exports.signup = function(req, res, next) {
         return next(error)
       }
       // Respond to request indicating the user was created
-      res.json({ success: true })
+      res.json({ token: tokenForUser(user) })
     })
 
   })
