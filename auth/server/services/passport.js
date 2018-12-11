@@ -23,8 +23,22 @@ const localLogin = new LocalStrategy(localOptions, function(email, password, don
     }
 
     // Compare passwords: is `password` equal to `user.password`?
+    user.comparePassword(password, function(error, isMatch) {
+      if (error) {
+        return done(error)
+      }
+
+      if (!isMatch) {
+        return done(null, false)
+      }
+
+      return done(null, user)
+    })
   })
 })
+
+// Tell passport to use this strategy
+passport.use(localLogin)
 
 // Create JWT strategy (used for verifying an authenticated request request made with a token in the `authorization` header)
 const jwtOptions = {
