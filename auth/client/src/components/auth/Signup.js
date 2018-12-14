@@ -8,7 +8,9 @@ class Signup extends Component {
   // Instance property
   onSubmit = (formProps) => {
     // signup is an action creator
-    this.props.signup(formProps)
+    this.props.signup(formProps, () => {
+      this.props.history.push('/feature')
+    })
   }
 
   render() {
