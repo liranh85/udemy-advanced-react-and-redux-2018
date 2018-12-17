@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+// Importing css files in this fashion is enabled by create-react-app thanks to the webpack configuration is includes
 import './headerStyle.css'
 
 class Header extends Component {
